@@ -13,5 +13,20 @@
 .button-collection {
   background-color: cyan;
   height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
   width: calc(100% - 300px);
+}
+.button {
+  background-color: darkgray;
+  border: 1px solid black;
+  border-radius: 2px;
+  width: 200px;
+  height: 200px;
+}
+.button:hover {
+  background-color: blue;
+  cursor: grab;
 }
