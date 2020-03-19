@@ -3,14 +3,14 @@
   border: solid 2px black;
   height: 90vh;
   display: flex;
-  max-width: 1600px;
+  max-width: 1400px;
 }
 .sidebar {
   background-color: magenta;
   width: 300px;
   height: 100%;
 }
-.button-collection {
+.pad-collection {
   background-color: cyan;
   height: 100%;
   display: flex;
@@ -19,14 +19,20 @@
   align-content: space-around;
   width: calc(100% - 300px);
 }
-.button {
+.pad {
   background-color: darkgray;
   border: 1px solid black;
   border-radius: 2px;
   width: 200px;
   height: 200px;
 }
-.button:hover {
+.pad:hover {
   background-color: blue;
   cursor: grab;
 }
+.pad-text {
+  line-height: 150px;
+  text-align: center;
+  color: whitesmoke;
+}
+
