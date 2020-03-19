@@ -1,0 +1,17 @@
+.content {
+  margin: 15px auto;
+  border: solid 2px black;
+  height: 90vh;
+  display: flex;
+  max-width: 1600px;
+}
+.sidebar {
+  background-color: magenta;
+  width: 300px;
+  height: 100%;
+}
+.button-collection {
+  background-color: cyan;
+  height: 100%;
+  width: calc(100% - 300px);
+}
