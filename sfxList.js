@@ -1,7 +1,13 @@
 export const SFX_LIST = [
   {
     id: 0,
-    name: "Laser 1",
-    url: "sfx/laser.wav"
-  }
+    name: "Boom Swoosh",
+    url: "sfx/boomSwoosh.mp3"
+  },
+  {
+    id: 1,
+    name: "Choir Heaven",
+    url: "sfx/choirHeaven.mp3"
+  },
+
 ] 

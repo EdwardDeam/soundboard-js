@@ -29,8 +29,11 @@ function createButtons() {
       event.toElement.style.cursor = "grabbing";
     })
     btn.addEventListener('mouseup', (event) => {
-      event.toElement.style.cursor = "grab";
-      playSound(event.toElement.id);
+      console.log(event.which);
+      if (event.which === 1) {// Left click
+        event.toElement.style.cursor = "grab";
+        playSound(event.toElement.id);
+      }
     })
     element.appendChild(btn);
   }
@@ -50,7 +53,7 @@ function loadSound(sound) {
 function playSound(id) {
   id = id.replace("sfx-", "");
   const effect = SFX_LIST.find((element) => element.id == id)
-  console.log(effect);
+  // console.log(effect);
   if (effect) {
     const source = context.createBufferSource();
     source.buffer = effect.buffer;
