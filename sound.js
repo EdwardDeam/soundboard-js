@@ -8,25 +8,26 @@ const pads = document.querySelector('.pad-collection');
 const settings = {
   currentPage: 1,
   maxButtons: Math.floor(pads.offsetWidth / 200) * Math.floor(pads.offsetHeight / 200),
+  volume: document.querySelector('#volume').value
 }
 
 SFX_LIST.forEach(sound => {
   loadSound(sound);
 });
 
-setup();
+setupPage();
 window.onresize = () => {
   createButtons();
   updatePagination();
 };
 
-function setup() {
-  // Add listeners to page buttons
+function setupPage() {
+  // Add listeners
   document.querySelector('.btn-prev').addEventListener('click', prevPage);
   document.querySelector('.btn-next').addEventListener('click', nextPage);
+  document.querySelector('#volume').addEventListener('change', updateVolume);
   createButtons();
   updatePagination();
-
 }
 
 function createButtons() {
@@ -53,7 +54,6 @@ function createButtons() {
     btn.addEventListener('mouseup', (event) => {
       if (event.which === 1) { // Left click
         event.toElement.style.cursor = 'grab';
-        console.log(event.toElement);
         playSound(i);
       }
     })
@@ -77,7 +77,10 @@ function playSound(id) {
   if (effect) {
     const source = context.createBufferSource();
     source.buffer = effect.buffer;
-    source.connect(context.destination);
+    const gainNode = context.createGain();
+    gainNode.gain.value = (settings.volume / 100) ** 2 + .1;
+    source.connect(gainNode);
+    gainNode.connect(context.destination)
     source.start(0);
   }
 }
@@ -100,6 +103,6 @@ function prevPage() {
   }
 }
 
-
-
-
+function updateVolume() {
+  settings.volume = document.querySelector('#volume').value;
+}
