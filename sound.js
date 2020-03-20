@@ -87,6 +87,7 @@ function playSound(id) {
 
 function updatePagination() {
   settings.maxPages = Math.ceil(SFX_LIST.length / settings.maxButtons);
+  setting.currentPage = Math.min(Math.max(setting.currentPage, 1), settings.maxPages) // JS version of clamp()...
 }
 
 function nextPage() {
