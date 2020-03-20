@@ -35,4 +35,16 @@
   text-align: center;
   color: whitesmoke;
 }
+.sidebar {
+  display: flex;
+  flex-direction: row;
+}
+.page-controls {
+  width: 100%;
+  align-self: flex-end;
+}
+.btn-prev, .btn-next {
+  float: right;
+  margin: 5px 8px;
+}
 

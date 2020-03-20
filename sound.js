@@ -4,24 +4,42 @@ import { SFX_LIST } from "./sfxList.js";
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 const context = new AudioContext();
 
+const pads = document.querySelector('.pad-collection');
+const settings = {
+  currentPage: 1,
+  maxButtons: Math.floor(pads.offsetWidth / 200) * Math.floor(pads.offsetHeight / 200),
+}
+
 SFX_LIST.forEach(sound => {
   loadSound(sound);
 });
 
-createButtons();
-window.onresize = createButtons;
+setup();
+window.onresize = () => {
+  createButtons();
+  updatePagination();
+};
 
+function setup() {
+  // Add listeners to page buttons
+  document.querySelector('.btn-prev').addEventListener('click', prevPage);
+  document.querySelector('.btn-next').addEventListener('click', nextPage);
+  createButtons();
+  updatePagination();
+
+}
 
 function createButtons() {
-  const element = document.querySelector('.pad-collection');
+  // Calcutate new max buttons
+  settings.maxButtons = Math.floor(pads.offsetWidth / 200) * Math.floor(pads.offsetHeight / 200);
+  // load sound depending on page
+  const startIndex = (settings.currentPage - 1) * settings.maxButtons;
   // Clean up old elements
-  while (element.firstChild) {
-    element.firstChild.remove();
+  while (pads.firstChild) {
+    pads.firstChild.remove();
   }
   // Find how many 200px square buttons can fit in the collection area.
-  const maxButtons = Math.floor(element.offsetWidth / 200) * Math.floor(element.offsetHeight / 200);
-
-  for (let i = 0; i < maxButtons; i++) {
+  for (let i = startIndex; i < startIndex + settings.maxButtons && i < SFX_LIST.length; i++) {
     const btn = document.createElement('div');
     const text = document.createElement('h3');
     text.innerText = SFX_LIST[i].name;
@@ -39,7 +57,7 @@ function createButtons() {
         playSound(i);
       }
     })
-    element.appendChild(btn);
+    pads.appendChild(btn);
   }
 };
 
@@ -56,12 +74,29 @@ function loadSound(sound) {
 
 function playSound(id) {
   const effect = SFX_LIST[id];
-  console.log(effect);
   if (effect) {
     const source = context.createBufferSource();
     source.buffer = effect.buffer;
     source.connect(context.destination);
     source.start(0);
+  }
+}
+
+function updatePagination() {
+  settings.maxPages = Math.ceil(SFX_LIST.length / settings.maxButtons);
+}
+
+function nextPage() {
+  if (settings.currentPage < settings.maxPages) {
+    settings.currentPage++;
+    createButtons();
+  }
+}
+
+function prevPage() {
+  if (settings.currentPage > 1) {
+    settings.currentPage--;
+    createButtons();
   }
 }
 
